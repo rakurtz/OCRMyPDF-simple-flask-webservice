@@ -9,4 +9,5 @@
 
 
 # Restart the Docker container
-docker-compose -f /path/to/your/docker-compose.yaml restart your_service_name
+docker compose -f /path/to/your/docker-compose.yaml restart ocr-my-pdf-flask
+
