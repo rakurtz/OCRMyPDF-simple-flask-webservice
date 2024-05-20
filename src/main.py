@@ -6,11 +6,29 @@ import os
 import subprocess
 import uuid
 import os
+import psutil
+
 
 FLASK_PORT = os.environ['FLASK_PORT']
 app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
 
+
+# determine the number of already run ocrmypdf processes (basic denial of service protection)
+
+def count_running_processes(process_name):
+
+    count = 0
+    for process in psutil.process_iter(['name']):
+        try:
+            if process.info['name'] == process_name:
+                count += 1
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return count
+
+
+## Flask routes
 @app.route('/')
 def index():
     error_message = request.args.get('error_message', "")
@@ -26,6 +44,13 @@ def upload():
     force_ocr = request.form.get('force_ocr', False)
     
     if file.filename.endswith('.pdf'):
+        process_threshold = int(os.environ.get('MAX_CONCURRENT_OCR_PROCESSES', 2))
+
+        # early exit if too many ocrmypdf processes are running
+        if count_running_processes('ocrmypdf') > process_threshold:
+            session['error_message'] = 'Too many OCR processes are currently running. Please try again later.'
+            return redirect(url_for('error'))
+        
         # Create the "uploads" directory if it doesn't exist
         os.makedirs('uploads', exist_ok=True)
         os.makedirs('downloads', exist_ok=True)

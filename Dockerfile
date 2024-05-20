@@ -1,7 +1,8 @@
 FROM jbarlow83/ocrmypdf
 
 # Example: add Italian
-RUN apt update && apt install tesseract-ocr-deu -y && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install gcc python3-dev build-essential tesseract-ocr-deu -y && rm -rf /var/lib/apt/lists/*
+RUN pip install psutil
 
 WORKDIR /app
 COPY src /app/src

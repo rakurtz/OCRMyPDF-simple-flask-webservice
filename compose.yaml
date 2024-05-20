@@ -2,10 +2,11 @@ services:
   ocr-my-pdf-flask:
     build: .
     container_name: ocr-my-pdf-flask
-  
+
     environment:
       # don't use "" or '' for the values!
       - FLASK_PORT=3000
+      - MAX_CONCURRENT_OCR_PROCESSES=2
     networks:
       - restricted_network
     healthcheck:
@@ -30,6 +31,6 @@ networks:
   restricted_network:
     internal: false
   ocr-external-network: # make sure to `docker network create ocr-external-network` first
-    external: true
+
 
   
