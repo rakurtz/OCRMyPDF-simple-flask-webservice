@@ -21,3 +21,4 @@ After that the service should be available at http://host:3000
 
 ## Todo:
 - migrate to production ready server (still flask developtment server)
+- implement a working queue to read from to prevent indefinite os.subprocesses with ocrmypdf
