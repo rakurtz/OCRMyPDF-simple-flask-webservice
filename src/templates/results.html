@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .result-container {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .result-container p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #666;
+        }
+        .result-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .result-container a:hover {
+            background-color: #0c5cbf;
+        }
+        .home-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background-color: #d2d7de;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #0c022a;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;           
+        }
+        .home-link:hover {
+            background-color: #90959c;
+        }
+    </style>
+</head>
+<body>
+    <h1>OCR Result</h1>
+    <div class="result-container">
+        <p><strong>File Name:</strong> example.pdf</p>
+        <p><strong>Original Filesize:</strong> {{orig_filesize}} MB</p>
+        <p><strong>Processed Filesize:</strong> {{target_filesize}} MB</p>
+        <a href="{{ download_url }}">Download Processed File</a>
+    </div>
+
+    <a class="home-link" href="/">Upload another PDF</a>
+</body>
+</html>

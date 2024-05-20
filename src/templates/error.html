@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .error-container {
+            width: 300px;
+            padding: 20px;
+            color: crimson;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .error-container h2 {
+            margin-bottom: 20px;
+            color: crimson;
+            text-align: center;
+        }
+
+        .error-container p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #3e3b3b;
+        }
+     
+        .error-message {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: rgb(113, 113, 113);
+            white-space: pre-wrap;
+        }
+        .home-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background-color: #d2d7de;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #0c022a;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;           
+        }
+        .home-link:hover {
+            background-color: #90959c;
+        }
+    </style>
+</head>
+<body>
+    <h1>OCR Result</h1>
+    <div class="error-container">
+        <h2 style="font-size: 18px;"><strong>Error processing your file!</strong></h2>
+        <p><strong>File Name:</strong>{{name}}</p>
+        <p><strong>Error Message:</strong></p>
+        <!-- Display the error message as monospace text -->
+        <p class="error-message">{{error_message}}</p>
+    </div>
+
+    <a class="home-link" href="/">Try another PDF</a>
+</body>
+</html>

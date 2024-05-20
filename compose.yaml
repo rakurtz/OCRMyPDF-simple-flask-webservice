@@ -1,0 +1,35 @@
+services:
+  ocr-my-pdf-flask:
+    build: .
+    container_name: ocr-my-pdf-flask
+  
+    environment:
+      # don't use "" or '' for the values!
+      - FLASK_PORT=3000
+    networks:
+      - restricted_network
+    healthcheck:
+      test: ["CMD", "/app/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: always
+  
+  caddy:
+    image: caddy
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - restricted_network
+      - ocr-external-network
+    
+networks:
+  restricted_network:
+    internal: false
+  ocr-external-network: # make sure to `docker network create ocr-external-network` first
+    external: true
+
+  

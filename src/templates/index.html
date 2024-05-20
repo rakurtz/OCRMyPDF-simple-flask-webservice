@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to OCR</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .drop-area {
+            width: 300px;
+            height: 200px;
+            border: 2px dashed #aaa;
+            border-radius: 10px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .drop-area p {
+            margin: 0;
+            color: #888;
+        }
+        .drop-area.dragover {
+            background-color: #e0e0e0;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .checkbox-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Run OCR on PDFs</h1>
+    <div class="drop-area" id="dropArea">
+        <p>Drag and drop a <b>single PDF</b> file here <br><br>(only one file gets processed)</p>
+    </div>
+    <div class="checkbox-container">
+        <input type="checkbox" id="force_ocr" name="force_ocr">
+        <label for="force_ocr">Force OCR</label>
+    </div>
+    <p style="color: red;">{{error_message}}</p>
+    <p>Processing may take some time. You'll get redirected to a download when it's done.</p>
+    <p>Thanks to the open-source software project <a href="https://github.com/ocrmypdf" target="_blank">OCRmyPDF</a></p>
+
+    <script>
+        var dropArea = document.getElementById('dropArea');
+
+        dropArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropArea.classList.add('dragover');
+        });
+
+        dropArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            dropArea.classList.remove('dragover');
+        });
+
+        dropArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropArea.classList.remove('dragover');
+
+            var file = e.dataTransfer.files[0];
+            if (file.type === 'application/pdf') {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/upload';
+                form.enctype = 'multipart/form-data';
+
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.name = 'file';
+                input.files = e.dataTransfer.files;
+
+                var checkbox = document.getElementById('force_ocr').cloneNode(true);
+
+
+                
+
+                form.appendChild(input);
+                form.appendChild(checkbox);
+                document.body.appendChild(form);
+
+                form.submit();
+                var message = document.createElement('p');
+                message.textContent = 'Processing... Please wait. You\'ll be redirected to a download shortly.';
+                message.style.fontSize = '18px';
+                message.style.color = 'green';
+                document.body.appendChild(message);
+            } else {
+                alert('Invalid file format. Please upload a PDF file.');
+            }
+        });
+    </script>
+</body>
+</body>
+</html>
